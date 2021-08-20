@@ -40,6 +40,7 @@ else
 	# echo cp -r $ZSH $TMP_DIR/oh-my-zsh
 	cp .zshrc $TMP_DIR
 	cp .gitconfig $TMP_DIR
+	cp .p10k.zsh $TMP_DIR
 	# echo 	scp -r $TMP_DIR $1":"$TMP_DIR
 	scp -r $TMP_DIR $1":"$TMP_DIR
 	# echo "files should now be in "$TMP_DIR
@@ -75,17 +76,22 @@ else
 		mv .gitconfig .gitconfig_$DATESTR
 		echo 'An existing .gitconfig was found. It was moved to .gitconfig_$DATESTR'
 	fi
+	if [-f .p10k.zsh $TMP_DIR]; then
+		mv .p10k.zsh .p10k.zsh_$SATESTR
+		echo 'An existing .p10k.zsh was found. It was woved to .p10k.zsh_$DATESTR'
+	fi
 
 	# move the new files into position
 	mv ${TMP_DIR}/.zshrc .zshrc
 	mv ${TMP_DIR}/.gitconfig .gitconfig
+	mv ${TMP_DIR}/.p10k.zsh .p10k.zsh
 
 	#check that zsh is installed
-	command -v zsh1 >/dev/null 2>&1
+	command -v zsh >/dev/null 2>&1
 	if [ \$? -ne 0 ]; then
     	echo 'zsh does not appear to be installed. Your configuration is prepared, so install zsh and then change your shell using chsh -s /bin/zsh, and your configuration should become active.'
 	else
-		chsh -s /bin/zsh
+		# chsh -s /bin/zsh
 		echo Successfully copied your configuration and 
 	fi"
 	# echo "$remote_commands"
